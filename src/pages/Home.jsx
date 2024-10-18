@@ -7,27 +7,13 @@ export const Home = () => {
 
   return (
     <div className="flex justify-center mt-20">
-      <div className=" space-y-4">
+      <div className="text-center space-y-4">
         <h1 className="text-2xl font-semibold">
-          Welcome home, {user ? user.username : "Buddy"}!
+          Harvesters Worker's Ball
         </h1>
+        <p>Coming soon...</p>
 
-        {!user && (
-          <Link
-            className="block mt-5 w-full bg-blue-700 text-center text-white font-medium text-lg
-        py-2 px-5 rounded-3xl"
-            to="/login"
-          >
-            Log in
-          </Link>
-        )}
-        <Link
-          className="block mt-5 w-full bg-blue-700 text-center text-white font-medium text-lg
-        py-2 px-5 rounded-3xl"
-          to="/profile"
-        >
-          Dashboard
-        </Link>
+       
       </div>
     </div>
   );
