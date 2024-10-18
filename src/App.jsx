@@ -1,31 +1,36 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Navbar from "./components/Navbar";
-import Edit from "./pages/Edit";
-import User from "./pages/User";
-import Notfound from "./pages/Notfound";
-import Users from "./pages/Users";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { SkeletonTheme } from "react-loading-skeleton";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Home from "./components/Home";
 
-function App() {
+const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Dashboard />} />
-        <Route path="/profile/edit" element={<Edit />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:username" element={<User />} />
-        {/* <Route path="/404" element={<Notfound />} /> */}
-        <Route path="*" element={<Notfound />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <SkeletonTheme baseColor="#e5e5e5" highlightColor="#d6d4d4">
+          <Routes>
+            <Route index element={<Home />} />
+          </Routes>
+        </SkeletonTheme>
+      </BrowserRouter>
+      <ToastContainer
+        hideProgressBar
+        autoClose={5000}
+        theme="colored"
+        position="top-center"
+      />
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
