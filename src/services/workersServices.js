@@ -13,11 +13,12 @@ export const fetchActiveWorkers = async () => {
 };
 
 // Register an active worker
-export const registerActiveWorker = async (workerId, updatedDetails) => {
+export const updateActiveWorker = async (worker) => {
+  console.log({ worker });
   const { data, error } = await supabase
     .from("workers")
-    .update(updatedDetails)
-    .eq("id", workerId);
+    .update({ ...worker })
+    .eq("id", worker.id);
 
   if (error) {
     throw new Error(error.message);
@@ -102,18 +103,18 @@ const markPresent = async (workerData) => {
   return data;
 };
 
-const manualAttendance = async (worker) => {
-  const { data, error } = await supabase
-    .from("workers")
-    .insert({ ...worker })
-    .select("*");
+// const manualAttendance = async (worker) => {
+//   const { data, error } = await supabase
+//     .from("workers")
+//     .insert({ ...worker })
+//     .select("*");
 
-  if (error) {
-    throw new Error(error.message);
-  }
+//   if (error) {
+//     throw new Error(error.message);
+//   }
 
-  return data;
-};
+//   return data;
+// };
 
 export const useAttendance = () => {
   return useMutation({
@@ -122,9 +123,9 @@ export const useAttendance = () => {
   });
 };
 
-export const useManualAttendance = () => {
+export const useUpdateActiveWorker = () => {
   return useMutation({
-    mutationFn: manualAttendance,
+    mutationFn: updateActiveWorker,
     cacheTime: 0,
   });
 };
