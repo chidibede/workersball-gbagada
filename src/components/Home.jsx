@@ -38,7 +38,6 @@ const Attendance = () => {
         <div className="bg-white shadow-lg rounded-xl p-6 mb-24 mt-12">
           <h1 className="text-2xl text-center font-bold mb-4">Registration</h1>
 
-          {/* Search Input */}
           <input
             type="text"
             placeholder="Search by name or phone number"
