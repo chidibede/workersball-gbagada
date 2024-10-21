@@ -3,7 +3,7 @@ import { useDebouncedSearch } from "../hooks/useDebouncedSearch";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Attendance = () => {
+const Home = () => {
   const { debouncedSearch, search: searchValue } = useDebouncedSearch();
   const { data: filteredPeople, isLoading } = useSearchWorker(searchValue);
   const [query, setQuery] = useState("");
@@ -121,4 +121,4 @@ const Attendance = () => {
   );
 };
 
-export default Attendance;
+export default Home;
