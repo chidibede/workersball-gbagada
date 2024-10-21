@@ -4,6 +4,8 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home";
+import { InactiveWorkerRegistration } from "./components/InActiveWorker";
+import { ActiveWorkerRegistration } from "./components/ActiveWorker";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -20,6 +22,8 @@ const App = () => {
         <SkeletonTheme baseColor="#e5e5e5" highlightColor="#d6d4d4">
           <Routes>
             <Route index element={<Home />} />
+            <Route path="/register" element={<InactiveWorkerRegistration />} />
+            <Route path="/update/:id" element={<ActiveWorkerRegistration />} />
           </Routes>
         </SkeletonTheme>
       </BrowserRouter>
