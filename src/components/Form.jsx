@@ -56,17 +56,15 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         <label className="text-lg text-transparent invisible mt-2 mr-2">
           *
         </label>
-        <select
-          className="border p-3 w-full rounded-md bg-gray-100"
+        <input
+          type="text"
+          placeholder="Marital Status"
+          className="border p-3 w-full rounded-md"
           value={formData.maritalstatus}
           onChange={(e) =>
             setFormData({ ...formData, maritalstatus: e.target.value })
           }
-        >
-          <option value="">Marital Status</option>
-          <option value="Single">Single</option>
-          <option value="Married">Married</option>
-        </select>
+        />
       </div>
 
       {!isActive && (

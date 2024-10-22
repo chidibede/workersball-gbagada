@@ -23,9 +23,13 @@ const Home = () => {
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4">
       <div className="lg:w-[50%] xl:w-[40%] md:w-[80%]">
         <Header />
-        <div className="bg-white shadow-lg rounded-xl p-6 mb-24 mt-12">
-          <h1 className="text-2xl text-center font-bold mb-4">Registration</h1>
-
+        <img
+          src="/workersball2.jpeg"
+          alt="Harvesters International Christian Center Logo"
+          className="h-32 w-full mx-auto object-cover opacity-70"
+        />
+        <div className="bg-white shadow-lg rounded-xl p-6 mb-24">
+          <h1 className="text-1xl text-center font-bold mb-4">Registration</h1>
           <input
             type="text"
             placeholder="Search by name or phone number"
@@ -62,11 +66,16 @@ const Home = () => {
 
                     <button
                       onClick={() =>
-                        navigate(`/update/${person.id}`)
+                        navigate(`/update/${person.id}`, {
+                          state: {
+                            firstname: person.firstname,
+                            lastname: person.lastname,
+                          },
+                        })
                       }
                       className="px-3 py-3 text-sm bg-blue-500 text-white rounded-lg flex"
                     >
-                      Update
+                      Register
                     </button>
                   </li>
                 ))}
@@ -83,26 +92,23 @@ const Home = () => {
             </div>
           ) : (
             <>
-            
-                <div className="text-center my-4">
-                  {isLoading && searchValue ? (
-                    <p>Searching...</p>
-                  ) : !isLoading && searchValue ? (
-                    <div>
-                      <p>No results</p>
-                      <button
-                        onClick={() => navigate("/register")}
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                      >
-                        Manually Register
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              
+              <div className="text-center my-4">
+                {isLoading && searchValue ? (
+                  <p>Searching...</p>
+                ) : !isLoading && searchValue ? (
+                  <div>
+                    <p>No results</p>
+                    <button
+                      onClick={() => navigate("/register")}
+                      className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                    >
+                      Manually Register
+                    </button>
+                  </div>
+                ) : null}
+              </div>
             </>
           )}
-
         </div>
       </div>
     </div>

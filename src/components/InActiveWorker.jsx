@@ -31,7 +31,7 @@ export const InactiveWorkerRegistration = () => {
       !formData.maritalstatus ||
       !formData.team ||
       !formData.department;
-    
+
     const isValid = validateEmail(formData.email);
     if (!isValid) {
       toast.error("Invalid email address");
@@ -80,8 +80,13 @@ export const InactiveWorkerRegistration = () => {
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4 mt-1 pb-8">
       <div className="lg:w-[40%] xl:w-[30%] md:w-[70%]">
         <Header isComplete={false} />
+        <img
+          src="/workersball1.jpeg"
+          alt="Harvesters International Christian Center Logo"
+          className="h-32 w-full mx-auto object-cover opacity-70"
+        />
         <h1 className="font-bold mb-3 text-center text-xl">
-          Worker Data Registration
+          Register for 2024 Gbagada Workers ball
         </h1>
         <Form
           formData={formData}
