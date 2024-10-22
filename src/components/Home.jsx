@@ -2,6 +2,7 @@ import { useSearchWorker } from "../services/search";
 import { useDebouncedSearch } from "../hooks/useDebouncedSearch";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 const Home = () => {
   const { debouncedSearch, search: searchValue } = useDebouncedSearch();
@@ -20,21 +21,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4">
-      <div className="lg:w-5/12">
-        {/* Header with Logo and Title */}
-        <header className="text-center mb-4 mt-8">
-          <img
-            src="/logo.jpg"
-            alt="Harvesters International Christian Center Logo"
-            className="w-32 h-32 mx-auto"
-          />
-          <h1 className="text-2xl font-bold mt-4">
-            Harvesters International Christian Centre, Gbagada campus
-          </h1>
-          <h2 className="text-2xl font-bold text-gray-500 mt-4">
-            Worker's Ball 2024 Registration
-          </h2>
-        </header>
+      <div className="lg:w-[50%] xl:w-[40%] md:w-[80%]">
+        <Header />
         <div className="bg-white shadow-lg rounded-xl p-6 mb-24 mt-12">
           <h1 className="text-2xl text-center font-bold mb-4">Registration</h1>
 
