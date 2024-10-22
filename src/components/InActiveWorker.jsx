@@ -31,6 +31,7 @@ export const InactiveWorkerRegistration = () => {
       !formData.maritalstatus ||
       !formData.team ||
       !formData.department;
+    
     const isValid = validateEmail(formData.email);
     if (!isValid) {
       toast.error("Invalid email address");
