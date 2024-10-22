@@ -4,7 +4,7 @@ const Header = ({ isComplete = true }) => {
       <img
         src="/logo.jpg"
         alt="Harvesters International Christian Center Logo"
-        className="w-32 h-20 mx-auto object-contain"
+        className="w-32 h-16 mx-auto object-contain"
       />
       {isComplete && (
         <div>
