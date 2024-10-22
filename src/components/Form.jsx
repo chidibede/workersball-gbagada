@@ -11,7 +11,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         <input
           type="text"
           placeholder="First Name"
-          className="border p-2 w-full rounded-md"
+          className="border p-3 w-full rounded-md"
           value={formData.firstname}
           onChange={(e) =>
             setFormData({ ...formData, firstname: e.target.value })
@@ -23,7 +23,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         <input
           type="text"
           placeholder="Last Name"
-          className="border p-2 w-full rounded-md"
+          className="border p-3 w-full rounded-md"
           value={formData.lastname}
           onChange={(e) =>
             setFormData({ ...formData, lastname: e.target.value })
@@ -35,7 +35,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 w-full rounded-md"
+          className="border p-3 w-full rounded-md"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
@@ -45,7 +45,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         <input
           type="tel"
           placeholder="Phone Number"
-          className="border p-2 w-full rounded-md"
+          className="border p-3 w-full rounded-md"
           value={formData.phonenumber}
           onChange={(e) =>
             setFormData({ ...formData, phonenumber: e.target.value })
@@ -57,7 +57,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           *
         </label>
         <select
-          className="border p-2 w-full rounded-md bg-gray-100"
+          className="border p-3 w-full rounded-md bg-gray-100"
           value={formData.maritalstatus}
           onChange={(e) =>
             setFormData({ ...formData, maritalstatus: e.target.value })
@@ -74,7 +74,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           <div className="flex">
             <label className="text-lg text-red-500 mt-2 mr-2">*</label>
             <select
-              className="border p-2 w-full rounded-md bg-gray-100"
+              className="border p-3 w-full rounded-md bg-gray-100"
               value={formData.team}
               onChange={(e) =>
                 setFormData({ ...formData, team: e.target.value })
@@ -91,7 +91,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           <div className="flex">
             <label className="text-lg text-red-500 mt-2 mr-2">*</label>
             <select
-              className="border p-2 w-full bg-gray-100 rounded-md"
+              className="border p-3 w-full bg-gray-100 rounded-md"
               value={formData.department}
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
@@ -114,7 +114,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
             <input
               type="text"
               placeholder="Role"
-              className="border p-2 w-full rounded-md"
+              className="border p-3 w-full rounded-md"
               value={formData.workerrole}
               onChange={(e) =>
                 setFormData({ ...formData, workerrole: e.target.value })
@@ -123,18 +123,23 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           </div>
         </div>
       )}
-      <button
-        className="bg-green-500 text-white p-2 mt-4 w-full rounded-md hover:bg-green-400"
-        onClick={handleSubmit}
-      >
-        Register
-      </button>
-      <button
-        className="bg-red-500 text-white p-2 mt-4 w-full rounded-md hover:bg-red-400"
-        onClick={() => navigate("/")}
-      >
-        Cancel
-      </button>
+      <div className="flex justify-between space-x-3">
+        <label className="text-lg text-transparent invisible mt-2">
+          *
+        </label>
+        <button
+          className="bg-red-500 text-white p-4 mt-4 w-full rounded-md hover:bg-red-400"
+          onClick={() => navigate("/")}
+        >
+          Cancel
+        </button>
+        <button
+          className="bg-green-500 text-white p-4 mt-4 w-full rounded-md hover:bg-green-400"
+          onClick={handleSubmit}
+        >
+          Register
+        </button>
+      </div>
     </div>
   );
 };
