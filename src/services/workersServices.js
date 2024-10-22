@@ -3,7 +3,7 @@ import supabase from "./supabase";
 
 export const fetchActiveWorkers = async () => {
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .select("*")
     .eq("status", "active");
   if (error) {
@@ -16,7 +16,7 @@ export const fetchActiveWorkers = async () => {
 export const updateActiveWorker = async (worker) => {
   console.log({ worker });
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .update({ ...worker })
     .eq("id", worker.id);
 
@@ -28,7 +28,7 @@ export const updateActiveWorker = async (worker) => {
 
 export const registerInactiveWorker = async (newWorkerDetails) => {
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .insert({ ...newWorkerDetails });
 
   if (error) {
@@ -40,7 +40,7 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
 // Fetch all registered workers
 export const fetchRegisteredWorkers = async () => {
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .select("*")
     .neq("status", "inactive");
   if (error) {
@@ -52,7 +52,7 @@ export const fetchRegisteredWorkers = async () => {
 // Mark a worker as present
 export const markAsPresent = async (workerId) => {
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .update({ attendance: "Present" })
     .eq("id", workerId);
 
@@ -65,7 +65,7 @@ export const markAsPresent = async (workerId) => {
 // Generate unique ID and assign auditorium
 export const assignAuditorium = async (workerId, auditoriumDetails) => {
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .update(auditoriumDetails)
     .eq("id", workerId);
 
@@ -79,7 +79,7 @@ const markPresent = async (workerData) => {
   // const day = getAwakeningDay();
   const isPresentKey = "ispresent";
   const { data: worker } = await supabase
-    .from("workers")
+    .from("worker")
     .select("*")
     .eq("id", workerData.id);
 
@@ -91,7 +91,7 @@ const markPresent = async (workerData) => {
   const dateISO = dateUTC.toISOString();
 
   const { data, error } = await supabase
-    .from("workers")
+    .from("worker")
     .update({ [isPresentKey]: true, updatedat: dateISO })
     .eq("id", worker.id);
 
