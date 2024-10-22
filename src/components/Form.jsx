@@ -5,7 +5,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col space-y-5 pb-8">
+    <div className="flex flex-col space-y-4 pb-8">
       <div className="flex">
         <label className="text-lg text-red-500 mt-2 mr-2">*</label>
         <input
