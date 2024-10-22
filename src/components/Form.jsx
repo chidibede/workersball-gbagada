@@ -132,7 +132,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           Cancel
         </button>
         <button
-          className="bg-green-500 text-white p-4 mt-4 w-full rounded-md hover:bg-green-400"
+          className="bg-blue-500 text-white p-4 mt-4 w-full rounded-md hover:bg-blue-400"
           onClick={handleSubmit}
         >
           Register
