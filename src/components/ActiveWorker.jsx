@@ -19,43 +19,60 @@ export const ActiveWorkerRegistration = () => {
   });
 
   const handleSubmit = async () => {
-    console.log({ formData });
-    updateActiveWorker(
-      { id: params.id, ...formData },
-      {
-        onSuccess() {
-          toast.success("Attendance manually added successfully");
-          queryClient.invalidateQueries();
-          setFormData({
-            firstname: "",
-            lastname: "",
-            email: "",
-            phonenumber: "",
-            maritalstatus: "",
-          });
-        },
-        onError(error) {
-          setFormData({
-            firstname: "",
-            lastname: "",
-            email: "",
-            phonenumber: "",
-            maritalstatus: "",
-          });
-          toast.error("Error registering");
-          throw error;
-        },
-      }
-    );
-    toast.success("Worker registration submitted!");
+    const isDisabled =
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.email ||
+      !formData.phonenumber ||
+      !formData.maritalstatus;
+
+    if (isDisabled) {
+      toast.error("Some fields are missing");
+      return;
+    } else {
+      updateActiveWorker(
+        { id: params.id, ...formData },
+        {
+          onSuccess() {
+            queryClient.invalidateQueries();
+            setFormData({
+              firstname: "",
+              lastname: "",
+              email: "",
+              phonenumber: "",
+              maritalstatus: "",
+            });
+            toast.success("Worker registration submitted!");
+          },
+          onError(error) {
+            setFormData({
+              firstname: "",
+              lastname: "",
+              email: "",
+              phonenumber: "",
+              maritalstatus: "",
+            });
+            toast.error("Error registering");
+            throw error;
+          },
+        }
+      );
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4 mt-1 pb-8">
       <div className="lg:w-[40%] xl:w-[30%] md:w-[70%]">
         <Header isComplete={false} />
-        <h1 className="font-bold text-xl mb-3 text-center">Worker Data Update</h1>
-        <Form formData={formData} handleSubmit={handleSubmit} setFormData={setFormData} isActive />
+        <h1 className="font-bold text-xl mb-3 text-center">
+          Worker Data Update
+        </h1>
+        <Form
+          formData={formData}
+          handleSubmit={handleSubmit}
+          setFormData={setFormData}
+          isActive
+        />
       </div>
     </div>
   );

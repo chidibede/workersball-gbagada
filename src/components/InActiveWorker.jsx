@@ -1,31 +1,88 @@
 import React, { useState } from "react";
-import { registerInactiveWorker } from "../services/workersServices";
+import { useRegisterInActiveWorker } from "../services/workersServices";
 import Header from "./Header";
 import Form from "./Form";
+import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export const InactiveWorkerRegistration = () => {
+  const params = useParams();
+  const { mutate: registerInActiveWorker } = useRegisterInActiveWorker();
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
-    phone: "",
-    maritalStatus: "",
+    phonenumber: "",
+    maritalstatus: "",
     team: "",
     department: "",
-    role: "",
+    workerrole: "",
   });
 
   const handleSubmit = async () => {
-    await registerInactiveWorker(formData);
-    alert("Worker registration submitted!");
-  };
+    const isDisabled =
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.email ||
+      !formData.phonenumber ||
+      !formData.maritalstatus ||
+      !formData.team ||
+      !formData.department;
 
+    if (isDisabled) {
+      toast.error("Some fields are missing");
+      return;
+    } else {
+      registerInActiveWorker(
+        { id: params.id, ...formData },
+        {
+          onSuccess() {
+            queryClient.invalidateQueries();
+            setFormData({
+              firstname: "",
+              lastname: "",
+              email: "",
+              phonenumber: "",
+              maritalstatus: "",
+              team: "",
+              department: "",
+              workerrole: "",
+            });
+            toast.success("Worker registration submitted!");
+          },
+          onError(error) {
+            setFormData({
+              firstname: "",
+              lastname: "",
+              email: "",
+              phonenumber: "",
+              maritalstatus: "",
+              team: "",
+              department: "",
+              workerrole: "",
+            });
+            toast.error("Error registering");
+            throw error;
+          },
+        }
+      );
+    }
+  };
   return (
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4 mt-1 pb-8">
       <div className="lg:w-[40%] xl:w-[30%] md:w-[70%]">
         <Header isComplete={false} />
-        <h1 className="font-bold mb-3 text-center text-xl">Worker Data Registration</h1>
-        <Form formData={formData} handleSubmit={handleSubmit} setFormData={setFormData} isActive={false} />
+        <h1 className="font-bold mb-3 text-center text-xl">
+          Worker Data Registration
+        </h1>
+        <Form
+          formData={formData}
+          handleSubmit={handleSubmit}
+          setFormData={setFormData}
+          isActive={false}
+        />
       </div>
     </div>
   );

@@ -26,11 +26,10 @@ export const updateActiveWorker = async (worker) => {
   return data;
 };
 
-// Register an inactive worker
 export const registerInactiveWorker = async (newWorkerDetails) => {
   const { data, error } = await supabase
     .from("workers")
-    .insert([newWorkerDetails]);
+    .insert({ ...newWorkerDetails });
 
   if (error) {
     throw new Error(error.message);
@@ -126,6 +125,12 @@ export const useAttendance = () => {
 export const useUpdateActiveWorker = () => {
   return useMutation({
     mutationFn: updateActiveWorker,
+    cacheTime: 0,
+  });
+};
+export const useRegisterInActiveWorker = () => {
+  return useMutation({
+    mutationFn: registerInactiveWorker,
     cacheTime: 0,
   });
 };
