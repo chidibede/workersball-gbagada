@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { validateEmail } from "../utils/validate";
+import WorkersBallImage from "./WorkersBallImage";
 
 export const InactiveWorkerRegistration = () => {
   const params = useParams();
@@ -80,11 +81,7 @@ export const InactiveWorkerRegistration = () => {
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4 mt-1 pb-8">
       <div className="lg:w-[40%] xl:w-[30%] md:w-[70%]">
         <Header isComplete={false} />
-        <img
-          src="/workersball1.jpeg"
-          alt="Harvesters International Christian Center Logo"
-          className="h-32 w-full mx-auto object-cover opacity-70"
-        />
+        <WorkersBallImage picture="/workersball1.jpeg" />
         <h1 className="font-bold mb-3 text-center text-xl">
           Register for 2024 Gbagada Workers ball
         </h1>

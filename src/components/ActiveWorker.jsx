@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import Header from "./Header";
 import Form from "./Form";
 import { validateEmail } from "../utils/validate";
+import WorkersBallImage from "./WorkersBallImage";
 
 export const ActiveWorkerRegistration = () => {
   const params = useParams();
@@ -71,11 +72,7 @@ export const ActiveWorkerRegistration = () => {
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4 mt-1 pb-8">
       <div className="lg:w-[40%] xl:w-[30%] md:w-[70%]">
         <Header isComplete={false} />
-        <img
-          src="/workersball1.jpeg"
-          alt="Harvesters International Christian Center Logo"
-          className="h-32 w-full mx-auto object-cover opacity-70"
-        />
+        <WorkersBallImage picture="/workersball1.jpeg" />
         <h1 className="font-bold text-xl mb-3 text-center">
           Register for 2024 Gbagada Workers ball
         </h1>

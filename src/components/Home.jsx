@@ -3,6 +3,7 @@ import { useDebouncedSearch } from "../hooks/useDebouncedSearch";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
+import WorkersBallImage from "./WorkersBallImage";
 
 const Home = () => {
   const { debouncedSearch, search: searchValue } = useDebouncedSearch();
@@ -23,11 +24,7 @@ const Home = () => {
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4">
       <div className="lg:w-[50%] xl:w-[40%] md:w-[80%]">
         <Header />
-        <img
-          src="/workersball2.jpeg"
-          alt="Harvesters International Christian Center Logo"
-          className="h-32 w-full mx-auto object-cover opacity-70"
-        />
+        <WorkersBallImage picture="/workersball2.jpeg" />
         <div className="bg-white shadow-lg rounded-xl p-6 mb-24">
           <input
             type="text"
