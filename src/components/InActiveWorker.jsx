@@ -5,6 +5,7 @@ import Form from "./Form";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { validateEmail } from "../utils/validate";
 
 export const InactiveWorkerRegistration = () => {
   const params = useParams();
@@ -30,7 +31,11 @@ export const InactiveWorkerRegistration = () => {
       !formData.maritalstatus ||
       !formData.team ||
       !formData.department;
-
+    const isValid = validateEmail(formData.email);
+    if (!isValid) {
+      toast.error("Invalid email address");
+      return;
+    }
     if (isDisabled) {
       toast.error("Some fields are missing");
       return;

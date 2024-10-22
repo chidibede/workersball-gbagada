@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { teamsAndDepartments } from "../utils/teams";
 
 const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
   const navigate = useNavigate();
@@ -52,9 +53,11 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
         />
       </div>
       <div className="flex">
-        <label className="text-lg text-transparent invisible mt-2 mr-2">*</label>
+        <label className="text-lg text-transparent invisible mt-2 mr-2">
+          *
+        </label>
         <select
-          className="border p-2 w-full rounded-md"
+          className="border p-2 w-full rounded-md bg-gray-100"
           value={formData.maritalstatus}
           onChange={(e) =>
             setFormData({ ...formData, maritalstatus: e.target.value })
@@ -71,29 +74,37 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           <div className="flex">
             <label className="text-lg text-red-500 mt-2 mr-2">*</label>
             <select
-              className="border p-2 w-full rounded-md"
+              className="border p-2 w-full rounded-md bg-gray-100"
               value={formData.team}
               onChange={(e) =>
                 setFormData({ ...formData, team: e.target.value })
               }
             >
-              <option value="">Team</option>
-              <option value="Logistics">Logistics</option>
-              <option value="Media">Media</option>
+              <option value="">Select team</option>
+              {teamsAndDepartments.map((item) => (
+                <option key={item.team} value={item.team}>
+                  {item.team}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex">
             <label className="text-lg text-red-500 mt-2 mr-2">*</label>
             <select
-              className="border p-2 w-full rounded-md"
+              className="border p-2 w-full bg-gray-100 rounded-md"
               value={formData.department}
               onChange={(e) =>
                 setFormData({ ...formData, department: e.target.value })
               }
             >
-              <option value="">Department</option>
-              <option value="Admin">Admin</option>
-              <option value="Security">Security</option>
+              <option value="">Select department</option>
+              {teamsAndDepartments
+                .find((item) => item.team === formData.team)
+                ?.department.map((dept) => (
+                  <option key={dept} value={dept}>
+                    {dept}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="flex">
