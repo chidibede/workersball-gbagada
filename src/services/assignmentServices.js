@@ -1,3 +1,4 @@
+import { sendEmail } from "./emailjs";
 import supabase from "./supabase";
 
 // Array of 130 unique colors (you can replace with actual color values)
@@ -166,7 +167,7 @@ async function getLatestTableAndSeat() {
   return { tableNumber, seatNumber };
 }
 
-export async function generateWorkerId(workerId) {
+export async function generateWorkerId(workerId, email, name) {
   const { tableNumber, seatNumber } = await getLatestTableAndSeat();
 
   const totalSeatsAssigned = (tableNumber - 1) * 10 + seatNumber;
@@ -198,6 +199,8 @@ export async function generateWorkerId(workerId) {
     console.error("Error inserting worker ID:", error);
     throw error;
   }
+
+  await sendEmail(name, email, code);
 
   console.log(`Worker ID ${workerId} generated and inserted successfully!`);
 }

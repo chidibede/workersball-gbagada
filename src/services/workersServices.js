@@ -26,7 +26,7 @@ export const updateActiveWorker = async (worker) => {
   }
 
   try {
-    await generateWorkerId(id);
+    await generateWorkerId(id, worker.email, worker.firstname);
   } catch (error) {
     throw new Error(error.message)
   }
