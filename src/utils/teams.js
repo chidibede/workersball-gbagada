@@ -153,3 +153,15 @@ export const teamsAndDepartments = [
     ],
   },
 ];
+
+export const workerRoles = [
+  "Cell Leader",
+  "Small Group Leader",
+  "Assistant HOD",
+  "Zonal Leader",
+  "HOD",
+  "Sub Team Head/Admin",
+  "Community Leader",
+  "Team Pastor/Head",
+  "Directional Leader",
+];

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUpdateActiveWorker } from "../services/workersServices";
 import { toast } from "react-toastify";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import Header from "./Header";
 import Form from "./Form";
@@ -10,7 +10,9 @@ import WorkersBallImage from "./WorkersBallImage";
 
 export const ActiveWorkerRegistration = () => {
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(false)
   const location = useLocation();
+  const navigate = useNavigate()
   const { mutate: updateActiveWorker } = useUpdateActiveWorker();
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
@@ -38,6 +40,7 @@ export const ActiveWorkerRegistration = () => {
       toast.error("Some fields are missing");
       return;
     } else {
+      setIsLoading(true)
       updateActiveWorker(
         { id: params.id, ...formData },
         {
@@ -50,16 +53,12 @@ export const ActiveWorkerRegistration = () => {
               phonenumber: "",
               maritalstatus: "",
             });
+            setIsLoading(false)
             toast.success("Worker registration submitted!");
+            navigate("/")
           },
           onError(error) {
-            setFormData({
-              firstname: "",
-              lastname: "",
-              email: "",
-              phonenumber: "",
-              maritalstatus: "",
-            });
+            setIsLoading(false)
             toast.error("Error registering");
             throw error;
           },
@@ -81,6 +80,7 @@ export const ActiveWorkerRegistration = () => {
           handleSubmit={handleSubmit}
           setFormData={setFormData}
           isActive
+          isLoading={isLoading}
         />
       </div>
     </div>

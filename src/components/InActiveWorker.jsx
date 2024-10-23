@@ -10,6 +10,7 @@ import WorkersBallImage from "./WorkersBallImage";
 
 export const InactiveWorkerRegistration = () => {
   const params = useParams();
+  const [isLoading, setIsLoading] = useState(false)
   const { mutate: registerInActiveWorker } = useRegisterInActiveWorker();
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
@@ -29,7 +30,6 @@ export const InactiveWorkerRegistration = () => {
       !formData.lastname ||
       !formData.email ||
       !formData.phonenumber ||
-      !formData.maritalstatus ||
       !formData.team ||
       !formData.department;
 
@@ -42,6 +42,7 @@ export const InactiveWorkerRegistration = () => {
       toast.error("Some fields are missing");
       return;
     } else {
+      setIsLoading(true)
       registerInActiveWorker(
         { id: params.id, ...formData },
         {
@@ -58,18 +59,10 @@ export const InactiveWorkerRegistration = () => {
               workerrole: "",
             });
             toast.success("Worker registration submitted!");
+            setIsLoading(false)
           },
           onError(error) {
-            setFormData({
-              firstname: "",
-              lastname: "",
-              email: "",
-              phonenumber: "",
-              maritalstatus: "",
-              team: "",
-              department: "",
-              workerrole: "",
-            });
+            setIsLoading(false)
             toast.error("Error registering");
             throw error;
           },
@@ -90,6 +83,7 @@ export const InactiveWorkerRegistration = () => {
           handleSubmit={handleSubmit}
           setFormData={setFormData}
           isActive={false}
+          isLoading={isLoading}
         />
       </div>
     </div>

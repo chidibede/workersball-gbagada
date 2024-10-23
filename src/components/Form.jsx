@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { teamsAndDepartments } from "../utils/teams";
+import { teamsAndDepartments, workerRoles } from "../utils/teams";
 
-const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
+const Form = ({ formData, setFormData, handleSubmit, isActive, isLoading }) => {
   const navigate = useNavigate();
 
   return (
@@ -109,15 +109,20 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
             <label className="text-lg text-transparent invisible mt-2 mr-2">
               *
             </label>
-            <input
-              type="text"
-              placeholder="Role"
-              className="border p-3 w-full rounded-md"
+            <select
+              className="border p-3 w-full bg-gray-100 rounded-md"
               value={formData.workerrole}
               onChange={(e) =>
                 setFormData({ ...formData, workerrole: e.target.value })
               }
-            />
+            >
+              <option value="">Select Role</option>
+              {workerRoles.map((role) => (
+                  <option key={role} value={role}>
+                    {role}
+                  </option>
+                ))}
+            </select>
           </div>
         </div>
       )}
@@ -135,7 +140,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive }) => {
           className="bg-blue-500 text-white p-4 mt-4 w-full rounded-md hover:bg-blue-400"
           onClick={handleSubmit}
         >
-          Register
+          {isLoading ? "Registering..." : "Register"}
         </button>
       </div>
     </div>

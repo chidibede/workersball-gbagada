@@ -37,3 +37,10 @@ CREATE TABLE Worker (
     createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedat TIMESTAMP
 );
+CREATE TABLE workertables (
+    id SERIAL PRIMARY KEY,
+    worker_id VARCHAR(255) UNIQUE NOT NULL,
+    color VARCHAR(50) NOT NULL,
+    table_number INT NOT NULL,
+    seat_number INT NOT NULL
+);

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import supabase from "./supabase";
+import { generateWorkerId } from "./assignmentServices";
 
 export const fetchActiveWorkers = async () => {
   const { data, error } = await supabase
@@ -14,15 +15,22 @@ export const fetchActiveWorkers = async () => {
 
 // Register an active worker
 export const updateActiveWorker = async (worker) => {
-  console.log({ worker });
+  const { id, ...rest } = worker;
   const { data, error } = await supabase
     .from("worker")
-    .update({ ...worker })
+    .update({ ...rest, isactive: true, isverified: true, isregistered: true })
     .eq("id", worker.id);
 
   if (error) {
     throw new Error(error.message);
   }
+
+  try {
+    await generateWorkerId(id);
+  } catch (error) {
+    throw new Error(error.message)
+  }
+
   return data;
 };
 
