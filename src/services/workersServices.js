@@ -19,7 +19,6 @@ export const fetchActiveWorkers = async () => {
 // Register an active worker
 export const updateActiveWorker = async (worker) => {
   const { id, ...rest } = worker;
-  const othername = worker.othername ? worker.othername : ""
   const { data, error } = await supabase
     .from("worker")
     .update({
@@ -27,8 +26,8 @@ export const updateActiveWorker = async (worker) => {
       isactive: true,
       isverified: true,
       isregistered: true,
-      fullname: `${worker.firstname} ${othername} ${worker.lastname}`,
-      fullnamereverse: `${worker.lastname} ${othername} ${worker.firstname}`,
+      fullname: `${worker.firstname} ${worker.lastname}`,
+      fullnamereverse: `${worker.lastname} ${worker.firstname}`,
     })
     .eq("id", worker.id);
 
@@ -46,14 +45,13 @@ export const updateActiveWorker = async (worker) => {
 };
 
 export const registerInactiveWorker = async (newWorkerDetails) => {
-   const othername = newWorkerDetails.othername ? newWorkerDetails.othername : ""
   const { data, error } = await supabase.from("worker").insert({
     ...newWorkerDetails,
     isactive: false,
     isverified: false,
     isregistered: true,
-    fullname: `${newWorkerDetails.firstname} ${othername} ${newWorkerDetails.lastname}`,
-    fullnamereverse: `${newWorkerDetails.lastname} ${othername} ${newWorkerDetails.firstname}`,
+    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails.lastname}`,
+    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails.firstname}`,
   });
 
   if (error) {
