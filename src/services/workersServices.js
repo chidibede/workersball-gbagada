@@ -64,6 +64,7 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
     //   newWorkerDetails.email,
     //   newWorkerDetails.firstname
     // );
+    console.log(newWorkerDetails)
   } catch (error) {
     throw new Error(error.message);
   }
