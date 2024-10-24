@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import WorkersBallImage from "./WorkersBallImage";
-import { CheckBadgeIcon } from "@heroicons/react/16/solid";
+import { CheckBadgeIcon, PauseIcon } from "@heroicons/react/16/solid";
 
 const Home = () => {
   const { debouncedSearch, search: searchValue } = useDebouncedSearch();
@@ -67,6 +67,7 @@ const Home = () => {
                       </button>
                     ) : person.isregistered && !person.isverified ? (
                       <button className="px-2 py-2 text-sm bg-yellow-500 text-white rounded-lg flex justify-between cursor-not-allowed">
+                        <PauseIcon className="text-white size-5" />
                         <span className="ml-3">Pending</span>
                       </button>
                     ) : (

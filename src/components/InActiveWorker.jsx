@@ -4,7 +4,7 @@ import Header from "./Header";
 import Form from "./Form";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { validateEmail } from "../utils/validate";
 import WorkersBallImage from "./WorkersBallImage";
 
@@ -13,6 +13,7 @@ export const InactiveWorkerRegistration = () => {
   const [isLoading, setIsLoading] = useState(false)
   const { mutate: registerInActiveWorker } = useRegisterInActiveWorker();
   const queryClient = useQueryClient();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -60,6 +61,7 @@ export const InactiveWorkerRegistration = () => {
             });
             toast.success("Worker registration submitted!");
             setIsLoading(false)
+            navigate("/")
           },
           onError(error) {
             setIsLoading(false)
