@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import supabase from "./supabase";
-import { generateWorkerId } from "./assignmentServices";
+import { generateInActiveWorkerId, generateWorkerId } from "./assignmentServices";
 
 export const fetchActiveWorkers = async () => {
   const { data, error } = await supabase
@@ -26,9 +26,9 @@ export const updateActiveWorker = async (worker) => {
   }
 
   try {
-    await generateWorkerId(id);
+    await generateWorkerId(id, worker.email, worker.firstname);
   } catch (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
 
   return data;
@@ -37,9 +37,15 @@ export const updateActiveWorker = async (worker) => {
 export const registerInactiveWorker = async (newWorkerDetails) => {
   const { data, error } = await supabase
     .from("worker")
-    .insert({ ...newWorkerDetails });
+    .insert({ ...newWorkerDetails, isactive: false, isverified: false, isregistered: true });
 
   if (error) {
+    throw new Error(error.message);
+  }
+
+  try {
+    await generateInActiveWorkerId(newWorkerDetails.id, newWorkerDetails.email, newWorkerDetails.firstname);
+  } catch (error) {
     throw new Error(error.message);
   }
   return data;

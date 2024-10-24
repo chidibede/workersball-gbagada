@@ -54,7 +54,7 @@ export const ActiveWorkerRegistration = () => {
               maritalstatus: "",
             });
             setIsLoading(false)
-            toast.success("Worker registration submitted!");
+            toast.success("Worker registered and email sent successfully");
             navigate("/")
           },
           onError(error) {
