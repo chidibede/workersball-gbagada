@@ -59,11 +59,11 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
   }
 
   try {
-    await generateInActiveWorkerId(
-      newWorkerDetails.id,
-      newWorkerDetails.email,
-      newWorkerDetails.firstname
-    );
+    // await generateInActiveWorkerId(
+    //   newWorkerDetails.id,
+    //   newWorkerDetails.email,
+    //   newWorkerDetails.firstname
+    // );
   } catch (error) {
     throw new Error(error.message);
   }
