@@ -1,6 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import supabase from "./supabase";
-import { generateInActiveWorkerId, generateWorkerId } from "./assignmentServices";
+import {
+  generateInActiveWorkerId,
+  generateWorkerId,
+} from "./assignmentServices";
 
 export const fetchActiveWorkers = async () => {
   const { data, error } = await supabase
@@ -18,7 +21,14 @@ export const updateActiveWorker = async (worker) => {
   const { id, ...rest } = worker;
   const { data, error } = await supabase
     .from("worker")
-    .update({ ...rest, isactive: true, isverified: true, isregistered: true })
+    .update({
+      ...rest,
+      isactive: true,
+      isverified: true,
+      isregistered: true,
+      fullname: `${worker.firstname} ${worker.othername} ${worker.lastname}`,
+      fullnamereverse: `${worker.lastname} ${worker.othername} ${worker.firstname}`,
+    })
     .eq("id", worker.id);
 
   if (error) {
@@ -35,16 +45,25 @@ export const updateActiveWorker = async (worker) => {
 };
 
 export const registerInactiveWorker = async (newWorkerDetails) => {
-  const { data, error } = await supabase
-    .from("worker")
-    .insert({ ...newWorkerDetails, isactive: false, isverified: false, isregistered: true });
+  const { data, error } = await supabase.from("worker").insert({
+    ...newWorkerDetails,
+    isactive: false,
+    isverified: false,
+    isregistered: true,
+    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails.othername} ${newWorkerDetails.lastname}`,
+    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails.othername} ${newWorkerDetails.firstname}`,
+  });
 
   if (error) {
     throw new Error(error.message);
   }
 
   try {
-    await generateInActiveWorkerId(newWorkerDetails.id, newWorkerDetails.email, newWorkerDetails.firstname);
+    await generateInActiveWorkerId(
+      newWorkerDetails.id,
+      newWorkerDetails.email,
+      newWorkerDetails.firstname
+    );
   } catch (error) {
     throw new Error(error.message);
   }
