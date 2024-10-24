@@ -227,7 +227,8 @@ export async function generateWorkerId(workerId, email, name) {
   await supabase.from("worker").update({ code }).eq("id", workerId);
 
   const { error } = await supabase.from("workertables").insert({
-    workerid: code,
+    workerid: workerId,
+    code: code,
     color: mainColor,
     tablenumber: tableNumber,
     seatnumber: seatNumber,
@@ -269,7 +270,8 @@ export async function generateInActiveWorkerId(workerId, email, name) {
   await supabase.from("worker").update({ code }).eq("id", workerId);
 
   const { error } = await supabase.from("workertablesinactive").insert({
-    workerid: code,
+    workerid: workerId,
+    code: code,
     color: eastColor,
     tablenumber: tableNumber,
     seatnumber: seatNumber,
