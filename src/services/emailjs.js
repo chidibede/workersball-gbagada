@@ -26,7 +26,7 @@ export const sendEmail = async (name, email, message, type) => {
       "https://api.emailjs.com/api/v1.0/email/send",
       data
     );
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error(error);
   }

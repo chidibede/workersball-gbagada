@@ -24,7 +24,6 @@ export const sendConfirmationEmail = async (
   };
 
   try {
-    console.log({ msg });
     await sgMail.send(msg);
     console.log("Confirmation email sent");
   } catch (error) {
