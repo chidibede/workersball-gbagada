@@ -26,8 +26,8 @@ export const updateActiveWorker = async (worker) => {
       isactive: true,
       isverified: true,
       isregistered: true,
-      fullname: `${worker.firstname} ${worker.othername} ${worker.lastname}`,
-      fullnamereverse: `${worker.lastname} ${worker.othername} ${worker.firstname}`,
+      fullname: `${worker.firstname} ${worker?.othername || ""} ${worker.lastname}`,
+      fullnamereverse: `${worker.lastname} ${worker?.othername || ""} ${worker.firstname}`,
     })
     .eq("id", worker.id);
 
@@ -50,8 +50,8 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
     isactive: false,
     isverified: false,
     isregistered: true,
-    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails.othername} ${newWorkerDetails.lastname}`,
-    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails.othername} ${newWorkerDetails.firstname}`,
+    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails?.othername || ""} ${newWorkerDetails.lastname}`,
+    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails?.othername} ${newWorkerDetails.firstname}`,
   });
 
   if (error) {
