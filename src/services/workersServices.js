@@ -1,15 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import supabase from "./supabase";
 import {
-  generateInActiveWorkerId,
+  // generateInActiveWorkerId,
   generateWorkerId,
 } from "./assignmentServices";
 
-export const fetchActiveWorkers = async () => {
+export const fetchPendingWorkers = async () => {
   const { data, error } = await supabase
     .from("worker")
-    .select("*")
-    .eq("status", "active");
+    .select()
+    .eq("isactive", false)
+    .eq("isregistered", true);
   if (error) {
     throw new Error(error.message);
   }
@@ -64,7 +65,6 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
     //   newWorkerDetails.email,
     //   newWorkerDetails.firstname
     // );
-    console.log(newWorkerDetails)
   } catch (error) {
     throw new Error(error.message);
   }
@@ -166,5 +166,12 @@ export const useRegisterInActiveWorker = () => {
   return useMutation({
     mutationFn: registerInactiveWorker,
     cacheTime: 0,
+  });
+};
+
+export const useFetchPendingWorkers = () => {
+  return useQuery({
+    queryKey: [],
+    queryFn: () => fetchPendingWorkers(),
   });
 };

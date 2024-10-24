@@ -214,10 +214,15 @@ export async function generateWorkerId(workerId, email, name) {
     return;
   }
 
-  const mainColor = "blue"
+  const mainColor = "Blue"
+
+  const formattedTableNumber = String(tableNumber).padStart(3, '0');
+
+  // Format seatNumber to be two digits (e.g., 01, 02, etc.)
+  const formattedSeatNumber = String(seatNumber).padStart(2, '0');
   
 
-  const code = `${mainColor}-${tableNumber}-${seatNumber}`;
+  const code = `${mainColor}-${formattedTableNumber}-${formattedSeatNumber}`;
 
   await supabase.from("worker").update({ code }).eq("id", workerId);
 
@@ -254,8 +259,12 @@ export async function generateInActiveWorkerId(workerId, email, name) {
   }
 
   const eastColor = "Gold"
+  const formattedTableNumber = String(tableNumber).padStart(2, '0');
 
-  const code = `${eastColor}-${tableNumber}-${seatNumber}`;
+  // Format seatNumber to be two digits (e.g., 01, 02, etc.)
+  const formattedSeatNumber = String(seatNumber).padStart(2, '0');
+
+  const code = `${eastColor}-${formattedTableNumber}-${formattedSeatNumber}`;
 
   await supabase.from("worker").update({ code }).eq("id", workerId);
 

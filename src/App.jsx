@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./components/Home";
 import { InactiveWorkerRegistration } from "./components/InActiveWorker";
 import { ActiveWorkerRegistration } from "./components/ActiveWorker";
+import Verify from "./components/Verify";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -24,6 +25,7 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="/register" element={<InactiveWorkerRegistration />} />
             <Route path="/update/:id" element={<ActiveWorkerRegistration />} />
+            <Route path="/admin/workforce/verify" element={<Verify />} />
           </Routes>
         </SkeletonTheme>
       </BrowserRouter>
