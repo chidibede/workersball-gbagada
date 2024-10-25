@@ -1,14 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import supabase from "./supabase";
 import {
+  generateInActiveWorkerId,
   // generateInActiveWorkerId,
   generateWorkerId,
 } from "./assignmentServices";
+import { sendEmail } from "./emailjs";
 
 export const fetchPendingWorkers = async () => {
   const { data, error } = await supabase
     .from("worker")
-    .select()
+    .select("id, email, firstname, lastname, workerrole, team, department")
     .eq("isactive", false)
     .eq("isregistered", true);
   if (error) {
@@ -30,7 +32,7 @@ export const updateActiveWorker = async (worker) => {
       fullname: `${worker.firstname} ${worker.lastname}`,
       fullnamereverse: `${worker.lastname} ${worker.firstname}`,
     })
-    .eq("id", worker.id);
+    .eq("id", id);
 
   if (error) {
     throw new Error(error.message);
@@ -38,6 +40,32 @@ export const updateActiveWorker = async (worker) => {
 
   try {
     await generateWorkerId(id, worker.email, worker.firstname);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+export const updateInActiveWorker = async (worker) => {
+  const { id, ...rest } = worker;
+  const { data, error } = await supabase
+    .from("worker")
+    .update({
+      ...rest,
+      isactive: false,
+      isverified: true,
+      isregistered: true,
+      fullname: `${worker.firstname} ${worker.lastname}`,
+      fullnamereverse: `${worker.lastname} ${worker.firstname}`,
+    })
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  try {
+    await generateInActiveWorkerId(worker.id, worker.email, worker.firstname);
   } catch (error) {
     throw new Error(error.message);
   }
@@ -60,105 +88,23 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
   }
 
   try {
-    // await generateInActiveWorkerId(
-    //   newWorkerDetails.id,
-    //   newWorkerDetails.email,
-    //   newWorkerDetails.firstname
-    // );
+    await sendEmail(newWorkerDetails.firstname, newWorkerDetails.email, newWorkerDetails.code, 'inactive');
   } catch (error) {
     throw new Error(error.message);
   }
   return data;
 };
 
-// Fetch all registered workers
-export const fetchRegisteredWorkers = async () => {
-  const { data, error } = await supabase
-    .from("worker")
-    .select("*")
-    .neq("status", "inactive");
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-};
-
-// Mark a worker as present
-export const markAsPresent = async (workerId) => {
-  const { data, error } = await supabase
-    .from("worker")
-    .update({ attendance: "Present" })
-    .eq("id", workerId);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-};
-
-// Generate unique ID and assign auditorium
-export const assignAuditorium = async (workerId, auditoriumDetails) => {
-  const { data, error } = await supabase
-    .from("worker")
-    .update(auditoriumDetails)
-    .eq("id", workerId);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-};
-
-const markPresent = async (workerData) => {
-  // const day = getAwakeningDay();
-  const isPresentKey = "ispresent";
-  const { data: worker } = await supabase
-    .from("worker")
-    .select("*")
-    .eq("id", workerData.id);
-
-  const workerAttendance = worker[0][isPresentKey];
-
-  if (workerAttendance) return worker[0];
-
-  const dateUTC = new Date();
-  const dateISO = dateUTC.toISOString();
-
-  const { data, error } = await supabase
-    .from("worker")
-    .update({ [isPresentKey]: true, updatedat: dateISO })
-    .eq("id", worker.id);
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  return data;
-};
-
-// const manualAttendance = async (worker) => {
-//   const { data, error } = await supabase
-//     .from("workers")
-//     .insert({ ...worker })
-//     .select("*");
-
-//   if (error) {
-//     throw new Error(error.message);
-//   }
-
-//   return data;
-// };
-
-export const useAttendance = () => {
-  return useMutation({
-    mutationFn: markPresent,
-    cacheTime: 0,
-  });
-};
 
 export const useUpdateActiveWorker = () => {
   return useMutation({
     mutationFn: updateActiveWorker,
+    cacheTime: 0,
+  });
+};
+export const useUpdateInActiveWorker = () => {
+  return useMutation({
+    mutationFn: updateInActiveWorker,
     cacheTime: 0,
   });
 };

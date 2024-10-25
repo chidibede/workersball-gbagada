@@ -282,7 +282,7 @@ export async function generateInActiveWorkerId(workerId, email, name) {
     throw error;
   }
 
-  await sendEmail(name, email, code, 'inactive');
+  await sendEmail(name, email, code, 'active');
 
   console.log(`Worker ID ${workerId} generated and inserted successfully!`);
 }

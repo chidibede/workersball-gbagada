@@ -1,4 +1,4 @@
-export default function Table({ people = [] }) {
+export default function Table({ people = [], handleInactive, handleActive }) {
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8">
       <div className="sm:flex sm:items-center">
@@ -35,13 +35,13 @@ export default function Table({ people = [] }) {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Title
+                    Team
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Email
+                    Department
                   </th>
                   <th
                     scope="col"
@@ -64,16 +64,23 @@ export default function Table({ people = [] }) {
                       {person.team}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.email}
+                      {person.department}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {person.workerrole}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       <button
-                        className="text-indigo-600 hover:text-indigo-900"
+                        className="text-red-600 hover:text-red-900 mr-4"
+                        onClick={() => handleInactive(person)}
                       >
-                        Edit<span className="sr-only">, {person.name}</span>
+                        Mark as inactive<span className="sr-only">, {person.name}</span>
+                      </button>
+                      <button
+                        className="text-indigo-600 hover:text-indigo-900"
+                        onClick={() => handleActive(person)}
+                      >
+                        Mark as active<span className="sr-only">, {person.name}</span>
                       </button>
                     </td>
                   </tr>
