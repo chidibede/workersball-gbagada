@@ -1,4 +1,7 @@
-export default function Table({ people = [], handleInactive, handleActive }) {
+import { useNavigate } from "react-router-dom";
+
+export default function Table({ people = [], handleInactive, handleActive, loading }) {
+  const navigate = useNavigate()
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8">
       <div className="sm:flex sm:items-center">
@@ -13,9 +16,10 @@ export default function Table({ people = [], handleInactive, handleActive }) {
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
+            onClick={() => navigate("/")}
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add user
+            Back to home
           </button>
         </div>
       </div>
@@ -70,18 +74,24 @@ export default function Table({ people = [], handleInactive, handleActive }) {
                       {person.workerrole}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <button
-                        className="text-red-600 hover:text-red-900 mr-4"
-                        onClick={() => handleInactive(person)}
-                      >
-                        Mark as inactive<span className="sr-only">, {person.name}</span>
-                      </button>
-                      <button
-                        className="text-indigo-600 hover:text-indigo-900"
-                        onClick={() => handleActive(person)}
-                      >
-                        Mark as active<span className="sr-only">, {person.name}</span>
-                      </button>
+                      {!person.isverified && (
+                        <>
+                          <button
+                            className="text-red-600 hover:text-red-900 mr-4"
+                            onClick={() => !loading.inactive && handleInactive(person)}
+                          >
+                            {loading.inactive ? "Marking" : "Mark as inactive"}
+                            <span className="sr-only">, {person.name}</span>
+                          </button>
+                          <button
+                            className="text-indigo-600 hover:text-indigo-900"
+                            onClick={() => !loading.active && handleActive(person)}
+                          >
+                             {loading.active ? "Marking" : "Mark as active"}
+                            <span className="sr-only">, {person.name}</span>
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

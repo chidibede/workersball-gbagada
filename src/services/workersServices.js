@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import supabase from "./supabase";
 import {
   generateInActiveWorkerId,
-  // generateInActiveWorkerId,
   generateWorkerId,
 } from "./assignmentServices";
 import { sendEmail } from "./emailjs";
@@ -10,8 +9,8 @@ import { sendEmail } from "./emailjs";
 export const fetchPendingWorkers = async () => {
   const { data, error } = await supabase
     .from("worker")
-    .select("id, email, firstname, lastname, workerrole, team, department")
-    .eq("isactive", false)
+    .select("id, email, firstname, lastname, workerrole, team, department, isverified")
+    .eq("isverified", false)
     .eq("isregistered", true);
   if (error) {
     throw new Error(error.message);
@@ -88,13 +87,17 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
   }
 
   try {
-    await sendEmail(newWorkerDetails.firstname, newWorkerDetails.email, newWorkerDetails.code, 'inactive');
+    await sendEmail(
+      newWorkerDetails.firstname,
+      newWorkerDetails.email,
+      newWorkerDetails.code,
+      "inactive"
+    );
   } catch (error) {
     throw new Error(error.message);
   }
   return data;
 };
-
 
 export const useUpdateActiveWorker = () => {
   return useMutation({

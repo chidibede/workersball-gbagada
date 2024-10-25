@@ -17,6 +17,7 @@ function Verify() {
   const queryClient = useQueryClient();
 
   const handleMarkActive = (worker) => {
+    setIsLoading(true);
     updateActiveWorker(
       { ...worker },
       {
@@ -35,6 +36,7 @@ function Verify() {
   };
 
   const handleMarkInActive = (worker) => {
+    setInActiveLoading(true);
     updateInActiveWorker(
       { ...worker },
       {
