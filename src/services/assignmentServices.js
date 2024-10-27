@@ -136,7 +136,7 @@ import supabase from "./supabase";
 const maxSeats = 1300;
 const maxTables = 100;
 
-const eastMaxSeats = 300
+const eastMaxSeats = 300;
 const eastMaxTables = 30;
 
 async function getLatestTableAndSeat() {
@@ -146,7 +146,6 @@ async function getLatestTableAndSeat() {
     .order("tablenumber", { ascending: false })
     .order("seatnumber", { ascending: false })
     .limit(1);
-
 
   if (error) {
     console.error("Error fetching latest table and seat number:", error);
@@ -177,7 +176,6 @@ async function getLatestTableAndSeatForInactive() {
     .order("seatnumber", { ascending: false })
     .limit(1);
 
-
   if (error) {
     console.error("Error fetching latest table and seat number:", error);
     return { tableNumber: 1, seatNumber: 1 };
@@ -199,7 +197,40 @@ async function getLatestTableAndSeatForInactive() {
   return { tableNumber, seatNumber };
 }
 
-export async function generateWorkerId(workerId, email, name) {
+export async function generateWorkerId(workerId, email, name, role) {
+  const mainColor = "Blue";
+  const leaderRoles = [
+    "Directional Leader",
+    "Team Pastor/Head",
+    "Team Pastor",
+    "Team Head",
+    "District Pastor",
+    "Service Pastor/Directional Leader",
+    "Campus Pastor",
+  ];
+  if (leaderRoles.includes(role)) {
+    const code = "Reserved";
+    await supabase.from("worker").update({ code }).eq("id", workerId);
+
+    const { error } = await supabase.from("workertables").insert({
+      workerid: workerId,
+      code: code,
+      color: mainColor,
+      tablenumber: "Reserved",
+      seatnumber: "Reserved",
+    });
+
+    if (error) {
+      console.error("Error inserting worker ID:", error);
+      throw error;
+    }
+
+    await sendEmail(name, email, code, "active");
+
+    console.log(`Worker ID ${workerId} generated and inserted successfully!`);
+    return code;
+  }
+
   const { tableNumber, seatNumber } = await getLatestTableAndSeat();
 
   const totalSeatsAssigned = (tableNumber - 1) * 10 + seatNumber;
@@ -214,13 +245,10 @@ export async function generateWorkerId(workerId, email, name) {
     return;
   }
 
-  const mainColor = "Blue"
-
-  const formattedTableNumber = String(tableNumber).padStart(3, '0');
+  const formattedTableNumber = String(tableNumber).padStart(3, "0");
 
   // Format seatNumber to be two digits (e.g., 01, 02, etc.)
-  const formattedSeatNumber = String(seatNumber).padStart(2, '0');
-  
+  const formattedSeatNumber = String(seatNumber).padStart(2, "0");
 
   const code = `${mainColor}-${formattedTableNumber}-${formattedSeatNumber}`;
 
@@ -239,7 +267,7 @@ export async function generateWorkerId(workerId, email, name) {
     throw error;
   }
 
-  await sendEmail(name, email, code, 'active');
+  await sendEmail(name, email, code, "active");
 
   console.log(`Worker ID ${workerId} generated and inserted successfully!`);
 }
@@ -259,11 +287,11 @@ export async function generateInActiveWorkerId(workerId, email, name) {
     return;
   }
 
-  const eastColor = "Gold"
-  const formattedTableNumber = String(tableNumber).padStart(2, '0');
+  const eastColor = "Gold";
+  const formattedTableNumber = String(tableNumber).padStart(2, "0");
 
   // Format seatNumber to be two digits (e.g., 01, 02, etc.)
-  const formattedSeatNumber = String(seatNumber).padStart(2, '0');
+  const formattedSeatNumber = String(seatNumber).padStart(2, "0");
 
   const code = `${eastColor}-${formattedTableNumber}-${formattedSeatNumber}`;
 
@@ -282,7 +310,7 @@ export async function generateInActiveWorkerId(workerId, email, name) {
     throw error;
   }
 
-  await sendEmail(name, email, code, 'active');
+  await sendEmail(name, email, code, "active");
 
   console.log(`Worker ID ${workerId} generated and inserted successfully!`);
 }
