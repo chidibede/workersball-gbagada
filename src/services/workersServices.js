@@ -9,7 +9,9 @@ import { sendEmail } from "./emailjs";
 export const fetchPendingWorkers = async () => {
   const { data, error } = await supabase
     .from("worker")
-    .select("id, email, firstname, lastname, workerrole, team, department, isverified")
+    .select(
+      "id, email, firstname, lastname, workerrole, team, department, isverified"
+    )
     .eq("isverified", false)
     .eq("isregistered", true);
   if (error) {
@@ -31,14 +33,15 @@ export const updateActiveWorker = async (worker) => {
       fullname: `${worker.firstname} ${worker.lastname}`,
       fullnamereverse: `${worker.lastname} ${worker.firstname}`,
     })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if (error) {
     throw new Error(error.message);
   }
 
   try {
-    await generateWorkerId(id, worker.email, worker.firstname, worker.workerrole);
+    await generateWorkerId(id, worker.email, worker.firstname, data[0].workerrole);
   } catch (error) {
     throw new Error(error.message);
   }

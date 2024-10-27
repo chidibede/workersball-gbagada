@@ -216,8 +216,8 @@ export async function generateWorkerId(workerId, email, name, role) {
       workerid: workerId,
       code: code,
       color: mainColor,
-      tablenumber: "Reserved",
-      seatnumber: "Reserved",
+      tablenumber: 0,
+      seatnumber: 0,
     });
 
     if (error) {
