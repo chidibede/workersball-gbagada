@@ -251,7 +251,7 @@ export async function generateWorkerId(workerId, email, name, role) {
   // Format seatNumber to be two digits (e.g., 01, 02, etc.)
   const formattedSeatNumber = String(seatNumber).padStart(2, "0");
 
-  const code = `${mainColor}-${formattedTableNumber}-${formattedSeatNumber}`;
+  const code = `${mainColor}-T${formattedTableNumber}-S${formattedSeatNumber}`;
 
   await supabase.from("worker").update({ code }).eq("id", workerId);
 
@@ -294,7 +294,7 @@ export async function generateInActiveWorkerId(workerId, email, name) {
   // Format seatNumber to be two digits (e.g., 01, 02, etc.)
   const formattedSeatNumber = String(seatNumber).padStart(2, "0");
 
-  const code = `${eastColor}-${formattedTableNumber}-${formattedSeatNumber}`;
+  const code = `${eastColor}-T${formattedTableNumber}-S${formattedSeatNumber}`;
 
   await supabase.from("worker").update({ code }).eq("id", workerId);
 
