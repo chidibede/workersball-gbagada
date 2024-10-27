@@ -199,6 +199,7 @@ async function getLatestTableAndSeatForInactive() {
 
 export async function generateWorkerId(workerId, email, name, role) {
   const mainColor = "Blue";
+  const leadPastorWifeId = "113"
   const leaderRoles = [
     "Directional Leader",
     "Team Pastor/Head",
@@ -208,7 +209,7 @@ export async function generateWorkerId(workerId, email, name, role) {
     "Service Pastor/Directional Leader",
     "Campus Pastor",
   ];
-  if (leaderRoles.includes(role)) {
+  if (leaderRoles.includes(role) || workerId === leadPastorWifeId || workerId === 113) {
     const code = "Reserved";
     await supabase.from("worker").update({ code }).eq("id", workerId);
 
