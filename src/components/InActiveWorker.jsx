@@ -23,6 +23,7 @@ export const InactiveWorkerRegistration = () => {
     team: "",
     department: "",
     workerrole: "",
+    nlp: false,
   });
 
   const handleSubmit = async () => {
@@ -32,7 +33,13 @@ export const InactiveWorkerRegistration = () => {
       !formData.email ||
       !formData.phonenumber ||
       !formData.team ||
-      !formData.department;
+      !formData.department ||
+      !formData.nlp;
+    
+      if(!formData.nlp){
+        toast.error("Please register to serve in NLP 2025");
+        return;
+      }
 
     const isValid = validateEmail(formData.email);
     if (!isValid) {

@@ -10,9 +10,9 @@ import WorkersBallImage from "./WorkersBallImage";
 
 export const ActiveWorkerRegistration = () => {
   const params = useParams();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { mutate: updateActiveWorker } = useUpdateActiveWorker();
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
@@ -21,6 +21,7 @@ export const ActiveWorkerRegistration = () => {
     email: "",
     phonenumber: "",
     maritalstatus: "",
+    nlp: false,
   });
 
   const handleSubmit = async () => {
@@ -28,7 +29,13 @@ export const ActiveWorkerRegistration = () => {
       !formData.firstname ||
       !formData.lastname ||
       !formData.email ||
-      !formData.phonenumber;
+      !formData.phonenumber ||
+      !formData.nlp;
+    
+    if(!formData.nlp){
+      toast.error("Please register to serve in NLP 2025");
+      return;
+    }
 
     const isValid = validateEmail(formData.email);
     if (!isValid) {
@@ -40,7 +47,7 @@ export const ActiveWorkerRegistration = () => {
       toast.error("Some fields are missing");
       return;
     } else {
-      setIsLoading(true)
+      setIsLoading(true);
       updateActiveWorker(
         { id: params.id, ...formData },
         {
@@ -53,12 +60,12 @@ export const ActiveWorkerRegistration = () => {
               phonenumber: "",
               maritalstatus: "",
             });
-            setIsLoading(false)
+            setIsLoading(false);
             toast.success("Worker registered and email sent successfully");
-            navigate("/")
+            navigate("/");
           },
           onError(error) {
-            setIsLoading(false)
+            setIsLoading(false);
             toast.error("Error registering");
             throw error;
           },

@@ -118,18 +118,27 @@ const Form = ({ formData, setFormData, handleSubmit, isActive, isLoading }) => {
             >
               <option value="">Select Role</option>
               {workerRoles.map((role) => (
-                  <option key={role} value={role}>
-                    {role}
-                  </option>
-                ))}
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
             </select>
           </div>
         </div>
       )}
+      <div className="flex">
+        <label className="text-lg text-red-500 mt-2 mr-3">*</label>
+        <input
+          type="checkbox"
+          id="nlp"
+          className="mr-4 size-4 mt-1.5"
+          checked={formData.nlp}
+          onChange={(e) => setFormData({ ...formData, nlp: e.target.checked })}
+        />
+        <label htmlFor="nlp" className="text-lg">Sign up to serve at NLP Conference Lagos 2025</label>
+      </div>
       <div className="flex justify-between space-x-3">
-        <label className="text-lg text-transparent invisible mt-2">
-          *
-        </label>
+        <label className="text-lg text-transparent invisible mt-2">*</label>
         <button
           className="bg-red-500 text-white p-4 mt-4 w-full rounded-md hover:bg-red-400"
           onClick={() => navigate("/")}

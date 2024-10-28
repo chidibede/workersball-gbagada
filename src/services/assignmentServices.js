@@ -143,9 +143,12 @@ async function getLatestTableAndSeat() {
   const { data, error } = await supabase
     .from("workertables")
     .select("*")
+    .filter("code", "not.eq", "Reserved")
     .order("tablenumber", { ascending: false })
     .order("seatnumber", { ascending: false })
     .limit(1);
+
+  console.log({ data });
 
   if (error) {
     console.error("Error fetching latest table and seat number:", error);
@@ -199,7 +202,7 @@ async function getLatestTableAndSeatForInactive() {
 
 export async function generateWorkerId(workerId, email, name, role) {
   const mainColor = "Blue";
-  const leadPastorWifeId = "113"
+  const leadPastorWifeId = "113";
   const leaderRoles = [
     "Directional Leader",
     "Team Pastor/Head",
@@ -209,7 +212,11 @@ export async function generateWorkerId(workerId, email, name, role) {
     "Service Pastor/Directional Leader",
     "Campus Pastor",
   ];
-  if (leaderRoles.includes(role) || workerId === leadPastorWifeId || workerId === 113) {
+  if (
+    leaderRoles.includes(role) ||
+    workerId === leadPastorWifeId ||
+    workerId === 113
+  ) {
     const code = "Reserved";
     await supabase.from("worker").update({ code }).eq("id", workerId);
 
