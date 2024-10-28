@@ -30,8 +30,8 @@ export const updateActiveWorker = async (worker) => {
       isactive: true,
       isverified: true,
       isregistered: true,
-      fullname: `${worker.firstname} ${worker.lastname}`,
-      fullnamereverse: `${worker.lastname} ${worker.firstname}`,
+      fullname: `${worker.firstname} ${worker.lastname}`.trim(),
+      fullnamereverse: `${worker.lastname} ${worker.firstname}`.trim(),
     })
     .eq("id", id)
     .select();
@@ -57,8 +57,8 @@ export const updateInActiveWorker = async (worker) => {
       isactive: false,
       isverified: true,
       isregistered: true,
-      fullname: `${worker.firstname} ${worker.lastname}`,
-      fullnamereverse: `${worker.lastname} ${worker.firstname}`,
+      fullname: `${worker.firstname} ${worker.lastname}`.trim(),
+      fullnamereverse: `${worker.lastname} ${worker.firstname}`.trim(),
     })
     .eq("id", id);
 
@@ -81,8 +81,8 @@ export const registerInactiveWorker = async (newWorkerDetails) => {
     isactive: false,
     isverified: false,
     isregistered: true,
-    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails.lastname}`,
-    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails.firstname}`,
+    fullname: `${newWorkerDetails.firstname} ${newWorkerDetails.lastname}`.trim(),
+    fullnamereverse: `${newWorkerDetails.lastname} ${newWorkerDetails.firstname}`.trim(),
   });
 
   if (error) {
