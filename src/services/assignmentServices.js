@@ -148,8 +148,6 @@ async function getLatestTableAndSeat() {
     .order("seatnumber", { ascending: false })
     .limit(1);
 
-  console.log({ data });
-
   if (error) {
     console.error("Error fetching latest table and seat number:", error);
     return { tableNumber: 1, seatNumber: 1 };

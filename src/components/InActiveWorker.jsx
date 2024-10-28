@@ -10,10 +10,10 @@ import WorkersBallImage from "./WorkersBallImage";
 
 export const InactiveWorkerRegistration = () => {
   const params = useParams();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const { mutate: registerInActiveWorker } = useRegisterInActiveWorker();
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -35,11 +35,11 @@ export const InactiveWorkerRegistration = () => {
       !formData.team ||
       !formData.department ||
       !formData.nlp;
-    
-      if(!formData.nlp){
-        toast.error("Please register to serve in NLP 2025");
-        return;
-      }
+
+    if (!formData.nlp) {
+      toast.error("Please register to serve in NLP 2025");
+      return;
+    }
 
     const isValid = validateEmail(formData.email);
     if (!isValid) {
@@ -50,7 +50,7 @@ export const InactiveWorkerRegistration = () => {
       toast.error("Some fields are missing");
       return;
     } else {
-      setIsLoading(true)
+      setIsLoading(true);
       registerInActiveWorker(
         { id: params.id, ...formData },
         {
@@ -67,12 +67,17 @@ export const InactiveWorkerRegistration = () => {
               workerrole: "",
             });
             toast.success("Worker registration submitted!");
-            setIsLoading(false)
-            navigate("/")
+            setIsLoading(false);
+            navigate("/");
           },
           onError(error) {
-            setIsLoading(false)
-            toast.error("Error registering");
+            setIsLoading(false);
+            const errorMessage = error.message.includes(
+              "duplicate key value violates unique constraint"
+            )
+              ? "You have already registered"
+              : "Error registering";
+            toast.error(errorMessage);
             throw error;
           },
         }

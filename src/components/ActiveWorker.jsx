@@ -31,8 +31,8 @@ export const ActiveWorkerRegistration = () => {
       !formData.email ||
       !formData.phonenumber ||
       !formData.nlp;
-    
-    if(!formData.nlp){
+
+    if (!formData.nlp) {
       toast.error("Please register to serve in NLP 2025");
       return;
     }
@@ -66,7 +66,12 @@ export const ActiveWorkerRegistration = () => {
           },
           onError(error) {
             setIsLoading(false);
-            toast.error("Error registering");
+            const errorMessage = error.message.includes(
+              "duplicate key value violates unique constraint"
+            )
+              ? "You have already registered"
+              : "Error registering";
+            toast.error(errorMessage);
             throw error;
           },
         }

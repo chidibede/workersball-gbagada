@@ -131,7 +131,7 @@ const Form = ({ formData, setFormData, handleSubmit, isActive, isLoading }) => {
         <input
           type="checkbox"
           id="nlp"
-          className="mr-4 size-4 mt-1.5"
+          className="mr-4 size-4 mt-2"
           checked={formData.nlp}
           onChange={(e) => setFormData({ ...formData, nlp: e.target.checked })}
         />
