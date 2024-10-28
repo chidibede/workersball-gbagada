@@ -211,7 +211,7 @@ export async function generateWorkerId(workerId, email, name, role) {
     "Campus Pastor",
   ];
   if (
-    leaderRoles.includes(role) ||
+    leaderRoles.includes(role.trim()) ||
     workerId === leadPastorWifeId ||
     workerId === 113
   ) {

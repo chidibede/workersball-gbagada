@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import { InactiveWorkerRegistration } from "./components/InActiveWorker";
 import { ActiveWorkerRegistration } from "./components/ActiveWorker";
 import Verify from "./components/Verify";
+import ManuallySendEmail from "./components/ManuallySendEmail";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/register" element={<InactiveWorkerRegistration />} />
             <Route path="/update/:id" element={<ActiveWorkerRegistration />} />
             <Route path="/admin/workforce/verify" element={<Verify />} />
+            <Route path="/admin/workforce/email" element={<ManuallySendEmail />} />
           </Routes>
         </SkeletonTheme>
       </BrowserRouter>
