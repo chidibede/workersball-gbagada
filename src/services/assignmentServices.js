@@ -203,15 +203,21 @@ export async function generateWorkerId(workerId, email, name, role) {
   const leadPastorWifeId = "113";
   const leaderRoles = [
     "Directional Leader",
+    "Directional Leader ",
     "Team Pastor/Head",
+    "Team Pastor/Head ",
     "Team Pastor",
+    "Team Pastor ",
     "Team Head",
+    "Team Head ",
     "District Pastor",
+    "District Pastor ",
     "Service Pastor/Directional Leader",
+    "Service Pastor/Directional Leader ",
     "Campus Pastor",
   ];
   if (
-    leaderRoles.includes(role.trim()) ||
+    leaderRoles.includes(role) ||
     workerId === leadPastorWifeId ||
     workerId === 113
   ) {
