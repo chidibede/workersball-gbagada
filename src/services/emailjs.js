@@ -4,6 +4,7 @@ export const sendEmail = async (name, email, message, type) => {
   const templateMap = {
     active: "template_fhqz6uh",
     inactive: "template_v8ew45b",
+    updated: "template_3wi1ubz"
   };
   const serviceId = "service_k275wtz";
   const templateId = templateMap[type];

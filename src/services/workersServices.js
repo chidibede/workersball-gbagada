@@ -108,12 +108,14 @@ export const useUpdateActiveWorker = () => {
     cacheTime: 0,
   });
 };
+
 export const useUpdateInActiveWorker = () => {
   return useMutation({
     mutationFn: updateInActiveWorker,
     cacheTime: 0,
   });
 };
+
 export const useRegisterInActiveWorker = () => {
   return useMutation({
     mutationFn: registerInactiveWorker,

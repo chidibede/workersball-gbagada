@@ -1,14 +1,24 @@
 import React from "react";
 import { sendEmail } from "../services/emailjs";
+import { toast } from "react-toastify";
 
 function ManuallySendEmail() {
   const [email, setEmail] = React.useState("");
   const [firstName, setFirstName] = React.useState("");
   const [isActive, setIsActive] = React.useState("active");
   const [code, setCode] = React.useState("active");
+  const [loading, setLoading] = React.useState(false);
 
   const handleSendEmail = async () => {
-    await sendEmail(firstName, email, code, isActive);
+    setLoading(true);
+    try {
+      await sendEmail(firstName, email, code, isActive);
+      setLoading(false);
+      toast.success("Email sent successfully!");
+    } catch (error) {
+      setLoading(false);
+      toast.error("Failed to send email");
+    }
   };
 
   return (
@@ -28,7 +38,7 @@ function ManuallySendEmail() {
         />
         <input
           type="text"
-          placeholder="active or inactive"
+          placeholder="active or inactive or updated"
           className="border p-3 w-full rounded-md mb-4"
           onChange={(e) => setIsActive(e.target.value)}
         />
@@ -39,12 +49,18 @@ function ManuallySendEmail() {
           onChange={(e) => setCode(e.target.value)}
         />
       </div>
-      <button
-        className="bg-blue-500 text-white p-4 w-30 rounded-md hover:bg-blue-400 ml-24"
-        onClick={handleSendEmail}
-      >
-        Send Email
-      </button>
+      {!loading ? (
+        <button
+          className="bg-blue-500 text-white p-4 w-30 rounded-md hover:bg-blue-400 ml-24"
+          onClick={handleSendEmail}
+        >
+          Send Email
+        </button>
+      ) : (
+        <button className="bg-blue-500 text-white p-4 w-30 rounded-md hover:bg-blue-400 ml-24">
+          Sending Email...
+        </button>
+      )}
     </div>
   );
 }
