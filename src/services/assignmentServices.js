@@ -136,8 +136,8 @@ import supabase from "./supabase";
 const maxSeats = 1300;
 const maxTables = 100;
 
-const eastMaxSeats = 300;
-const eastMaxTables = 30;
+const eastMaxSeats = 600;
+const eastMaxTables = 60;
 
 async function getLatestTableAndSeat() {
   const { data, error } = await supabase
