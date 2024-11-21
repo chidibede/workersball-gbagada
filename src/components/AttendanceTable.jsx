@@ -13,13 +13,13 @@ export default function AttendanceTable({
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Pending workers
+            Workers ball 2026
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the workers that manually registered
+            A list of all the workers that registered
           </p>
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+        {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
             onClick={() => navigate("/")}
@@ -27,7 +27,7 @@ export default function AttendanceTable({
           >
             Back to home
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
