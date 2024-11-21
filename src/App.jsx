@@ -27,8 +27,8 @@ const App = () => {
       <BrowserRouter>
         <SkeletonTheme baseColor="#e5e5e5" highlightColor="#d6d4d4">
           <Routes>
-            <Route index element={<Attendance2 />} />
             <Route index element={<RegistrationClosed />} />
+            <Route path="/admin/attendance" element={<Attendance2 />} />
              {/* <Route path="/register" element={<InactiveWorkerRegistration />} /> */}
             {/* <Route path="/update/:id" element={<ActiveWorkerRegistration />} /> */}
             <Route path="/admin/workforce/verify" element={<Verify />} />
