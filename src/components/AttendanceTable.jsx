@@ -13,7 +13,7 @@ export default function AttendanceTable({
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Workers ball 2026
+            Workers ball 2024
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             A list of all the workers that registered
