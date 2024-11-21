@@ -3,7 +3,7 @@ import supabase from "./supabase";
 
 const searchWorkers = async (searchParams) => {
   if (!searchParams) return [];
-  const { data, error } = await supabase.rpc("get_search_results_worker", {
+  const { data, error } = await supabase.rpc("get_search_results_ball", {
     search_text: searchParams.trim(),
   });
   if (error) {

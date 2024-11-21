@@ -10,6 +10,8 @@ import Verify from "./components/Verify";
 import ManuallySendEmail from "./components/ManuallySendEmail";
 import RegistrationClosed from "./components/RegistrationClosed";
 import NotFound from "./components/NotFound";
+import Attendance2 from "./components/Attendance2";
+import Reporting from "./components/Reporting";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -25,12 +27,13 @@ const App = () => {
       <BrowserRouter>
         <SkeletonTheme baseColor="#e5e5e5" highlightColor="#d6d4d4">
           <Routes>
-            {/* <Route index element={<Home />} /> */}
+            <Route index element={<Attendance2 />} />
             <Route index element={<RegistrationClosed />} />
              {/* <Route path="/register" element={<InactiveWorkerRegistration />} /> */}
             {/* <Route path="/update/:id" element={<ActiveWorkerRegistration />} /> */}
             <Route path="/admin/workforce/verify" element={<Verify />} />
             <Route path="/admin/workforce/email" element={<ManuallySendEmail />} /> 
+            <Route path="/admin/reports" element={<Reporting />} /> 
             <Route path="*" exact={true} element={<NotFound />} />
           </Routes>
         </SkeletonTheme>
