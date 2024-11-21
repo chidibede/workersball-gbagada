@@ -195,8 +195,8 @@ const Reporting = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <ReportSection title="Total Overview" stats={data.overview} />
-        <ReportSection title="Main Aud" stats={data.mainAud} />
-        <ReportSection title="East Aud" stats={data.eastAud} />
+        <ReportSection title="Main Auditorium" stats={data.mainAud} />
+        <ReportSection title="East Auditorium" stats={data.eastAud} />
         <ReportSection title="Reserved" stats={data.reserved} />
       </div>
     </div>
