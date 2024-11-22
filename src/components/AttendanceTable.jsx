@@ -67,7 +67,7 @@ export default function AttendanceTable({ people = [] }) {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Team
+                    Unique code
                   </th>
                   <th
                     scope="col"
@@ -79,7 +79,13 @@ export default function AttendanceTable({ people = [] }) {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Role
+                    Team
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Phone number
                   </th>
                   <th
                     scope="col"
@@ -91,7 +97,7 @@ export default function AttendanceTable({ people = [] }) {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Active status
+                    Attendance status
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     Action
@@ -106,19 +112,22 @@ export default function AttendanceTable({ people = [] }) {
                       {person.firstname} {person.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.team}
+                      {person.code}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {person.department}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.workerrole}
+                      {person.team}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {person.phonenumber}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {person.email}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.isRegistered ? "Yes" : "No"}
+                      {person.ispresent ? "Yes" : "No"}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       {person.ispresent ? (

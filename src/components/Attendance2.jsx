@@ -55,7 +55,7 @@ const Attendance2 = () => {
           {/* Search Input */}
           <input
             type="text"
-            placeholder="Search by name or phone number"
+            placeholder="Search by unique code, name, email or phone number"
             className="w-full mb-4 p-2 h-14 border rounded-lg"
             value={query}
             onChange={handleSearch}
