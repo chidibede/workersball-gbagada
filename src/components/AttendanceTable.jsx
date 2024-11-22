@@ -1,33 +1,55 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import supabase from "../services/supabase";
+import { CheckBadgeIcon } from "@heroicons/react/16/solid";
+import { toast } from "react-toastify";
 
-export default function AttendanceTable({
-  people = [],
-  handleInactive,
-  handleActive,
-  loading,
-}) {
-  const navigate = useNavigate();
-  console.log({ people });
+export default function AttendanceTable({ people = [] }) {
+  const [loading, setLoading] = useState({}); // Object to track loading per person
+  const [peopleState, setPeopleState] = useState(people);
+
+  const markAttendance = async (person) => {
+    setLoading((prev) => ({ ...prev, [person.id]: true }));
+
+    try {
+      // Update the workers table
+      const { error: workerError } = await supabase
+        .from("worker")
+        .update({ ispresent: true })
+        .eq("id", person.id);
+
+      if (workerError) throw workerError;
+
+      setPeopleState((prev) =>
+        prev.map((p) => (p.id === person.id ? { ...p, ispresent: true } : p))
+      );
+
+      const { error: activeError } = await supabase
+        .from("workertables")
+        .update({ ispresent: true })
+        .eq("workerid", person.id);
+
+      if (activeError) throw activeError;
+
+      toast.success("Worker marked successfully");
+    } catch (error) {
+      console.error("Error marking attendance:", error.message);
+      toast.error(`Failed to mark attendance for ${person.firstname}.`);
+    } finally {
+      setLoading((prev) => ({ ...prev, [person.id]: false }));
+    }
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Workers ball 2024
+            Workers Ball 2024
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             A list of all the workers that registered
           </p>
         </div>
-        {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Back to home
-          </button>
-        </div> */}
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -65,7 +87,6 @@ export default function AttendanceTable({
                   >
                     Email
                   </th>
-
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
@@ -73,12 +94,13 @@ export default function AttendanceTable({
                     Active status
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                    Action
                     <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {people.map((person) => (
+                {peopleState.map((person) => (
                   <tr key={person.id}>
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
                       {person.firstname} {person.lastname}
@@ -96,20 +118,24 @@ export default function AttendanceTable({
                       {person.email}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.isActive}
+                      {person.isRegistered ? "Yes" : "No"}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      {!person.isverified && (
-                        <>
-                          <button
-                            className="text-indigo-600 hover:text-indigo-900"
-                            onClick={() => handleActive(person)}
-                          >
-                            Mark attendance
-                            {/* {loading.active ? "Marking" : "Mark as active"} */}
-                            <span className="sr-only">, {person.name}</span>
-                          </button>
-                        </>
+                      {person.ispresent ? (
+                        <button className="px-5 py-2 text-sm bg-green-500 text-white rounded-lg flex justify-between cursor-not-allowed">
+                          <CheckBadgeIcon className="text-white size-5" />
+                          <span className="ml-3">Present</span>
+                        </button>
+                      ) : (
+                        <button
+                          className="text-white hover:bg-indigo-400 bg-indigo-600 px-2 py-2 rounded-lg hover:text-gray-50 flex items-center"
+                          onClick={() => markAttendance(person)}
+                          disabled={loading[person.id]}
+                        >
+                          {loading[person.id]
+                            ? "Marking..."
+                            : "Mark attendance"}
+                        </button>
                       )}
                     </td>
                   </tr>

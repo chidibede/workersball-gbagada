@@ -13,7 +13,7 @@ const searchWorkers = async (searchParams) => {
   if (!data) {
     throw new Error("Worker not found");
   }
-  return data;
+  return data.filter(item => item.isregistered === true);
 };
 
 export const useSearchWorker = (searchParams) => {
