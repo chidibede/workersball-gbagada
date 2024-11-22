@@ -1,18 +1,12 @@
 import { useSearchWorker } from "../services/search";
 import { useDebouncedSearch } from "../hooks/useDebouncedSearch";
 import { useState } from "react";
-import { useAttendance } from "../services/attendance";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 import AttendanceTable from "./AttendanceTable";
 
 const Attendance2 = () => {
   const { debouncedSearch, search: searchValue } = useDebouncedSearch();
   const { data: filteredPeople, isLoading } = useSearchWorker(searchValue);
-  const { mutate: markAttendanceMutation } = useAttendance();
   const [query, setQuery] = useState("");
-  const [mutateIsLoadingId, setMutateIsLoadingId] = useState(0);
-  const queryClient = useQueryClient();
 
   const handleSearch = (e) => {
     setQuery(e.target.value);
@@ -22,22 +16,6 @@ const Attendance2 = () => {
         : e.target.value
     );
   };
-
-  const handleMarkPresent = (person) => {
-    setMutateIsLoadingId(person.id);
-    markAttendanceMutation(person, {
-      onSuccess() {
-        toast.success("Attendance marked successfully");
-        setMutateIsLoadingId(0);
-        queryClient.invalidateQueries();
-      },
-      onError(error) {
-        setMutateIsLoadingId(0);
-        throw error;
-      },
-    });
-  };
-
   return (
     <div className="min-h-screen flex flex-col md:items-center bg-gray-50 p-4">
       <div className="lg:w-10/12">
@@ -64,12 +42,7 @@ const Attendance2 = () => {
           {isLoading ? (
             <div>Searching worker...</div>
           ) : (
-            <AttendanceTable
-              people={filteredPeople}
-              handleActive={handleMarkPresent}
-              // handleInactive={handleMarkInActive}
-              // loading={{ active: loading, inactive: inActiveLoading }}
-            />
+            <AttendanceTable people={filteredPeople} />
           )}
         </div>
       </div>

@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import supabase from "../services/supabase";
 import { CheckBadgeIcon } from "@heroicons/react/16/solid";
 import { toast } from "react-toastify";
 
 export default function AttendanceTable({ people = [] }) {
   const [loading, setLoading] = useState({}); // Object to track loading per person
-  const [peopleState, setPeopleState] = useState(people);
+  const [peopleState, setPeopleState] = useState([]);
+
+  useEffect(() => {
+   setPeopleState(people);
+  }, [people])
 
   const markAttendance = async (person) => {
     setLoading((prev) => ({ ...prev, [person.id]: true }));
@@ -46,9 +50,6 @@ export default function AttendanceTable({ people = [] }) {
           <h1 className="text-base font-semibold leading-6 text-gray-900">
             Workers Ball 2024
           </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the workers that registered
-          </p>
         </div>
       </div>
       <div className="mt-8 flow-root">
