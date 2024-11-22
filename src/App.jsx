@@ -4,7 +4,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Home from "./components/Home";
-// import { InactiveWorkerRegistration } from "./components/InActiveWorker";
+import { InactiveWorkerRegistration } from "./components/InActiveWorker";
 // import { ActiveWorkerRegistration } from "./components/ActiveWorker";
 import Verify from "./components/Verify";
 import ManuallySendEmail from "./components/ManuallySendEmail";
@@ -12,6 +12,7 @@ import RegistrationClosed from "./components/RegistrationClosed";
 import NotFound from "./components/NotFound";
 import Attendance2 from "./components/Attendance2";
 import Reporting from "./components/Reporting";
+import Home from "./components/Home";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -29,7 +30,8 @@ const App = () => {
           <Routes>
             <Route index element={<RegistrationClosed />} />
             <Route path="/admin/attendance" element={<Attendance2 />} />
-             {/* <Route path="/register" element={<InactiveWorkerRegistration />} /> */}
+            <Route path="/admin/register" element={<Home />} />
+             <Route path="/register" element={<InactiveWorkerRegistration />} />
             {/* <Route path="/update/:id" element={<ActiveWorkerRegistration />} /> */}
             <Route path="/admin/workforce/verify" element={<Verify />} />
             <Route path="/admin/workforce/email" element={<ManuallySendEmail />} /> 
