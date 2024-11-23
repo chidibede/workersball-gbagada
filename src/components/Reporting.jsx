@@ -67,56 +67,61 @@ const Reporting = () => {
         .from("workertables")
         .select("*", { count: "exact" })
         .neq("code", "Reserved");
-  
-      const { data: mainAudPresentData, error: mainAudPresentError } = await supabase
-        .from("workertables")
-        .select("*", { count: "exact" })
-        .neq("code", "Reserved")
-        .eq("ispresent", true); // Assuming `status` is the column indicating presence
-  
+
+      const { data: mainAudPresentData, error: mainAudPresentError } =
+        await supabase
+          .from("workertables")
+          .select("*", { count: "exact" })
+          .neq("code", "Reserved")
+          .eq("ispresent", true); // Assuming `status` is the column indicating presence
+
       if (mainAudError) throw mainAudError;
       if (mainAudPresentError) throw mainAudPresentError;
-  
+
       // Fetch eastAud totals and present count
       const { data: eastAudData, error: eastAudError } = await supabase
-        .from("workertablesinactive")
-        .select("*", { count: "exact" });
-  
-      const { data: eastAudPresentData, error: eastAudPresentError } = await supabase
-        .from("workertablesinactive")
+        .from("worker")
         .select("*", { count: "exact" })
-        .eq("ispresent", true);
-  
+        .ilike("code", "%Gold%")
+
+      const { data: eastAudPresentData, error: eastAudPresentError } =
+        await supabase
+          .from("worker")
+          .select("*", { count: "exact" })
+          .ilike("code", "%Gold%")
+          .eq("ispresent", true);
+
       if (eastAudError) throw eastAudError;
       if (eastAudPresentError) throw eastAudPresentError;
-  
+
       // Fetch reserved totals and present count
       const { data: reservedData, error: reservedError } = await supabase
         .from("workertables")
         .select("*", { count: "exact" })
         .eq("code", "Reserved");
-  
-      const { data: reservedPresentData, error: reservedPresentError } = await supabase
-        .from("workertables")
-        .select("*", { count: "exact" })
-        .eq("code", "Reserved")
-        .eq("ispresent", true);
-  
+
+      const { data: reservedPresentData, error: reservedPresentError } =
+        await supabase
+          .from("workertables")
+          .select("*", { count: "exact" })
+          .eq("code", "Reserved")
+          .eq("ispresent", true);
+
       if (reservedError) throw reservedError;
       if (reservedPresentError) throw reservedPresentError;
-  
+
       const mainAudTotal = mainAudData.length;
       const mainAudPresent = mainAudPresentData.length;
-  
+
       const eastAudTotal = eastAudData.length;
       const eastAudPresent = eastAudPresentData.length;
-  
+
       const reservedTotal = reservedData.length;
       const reservedPresent = reservedPresentData.length;
-  
+
       const totalOverview = mainAudTotal + eastAudTotal + reservedTotal;
       const totalPresent = mainAudPresent + eastAudPresent + reservedPresent;
-  
+
       // Update state
       setData({
         overview: {
@@ -147,7 +152,6 @@ const Reporting = () => {
     }
   };
 
-  
   useEffect(() => {
     fetchTotals();
   }, []);
