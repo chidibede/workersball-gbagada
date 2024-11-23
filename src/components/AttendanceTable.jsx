@@ -11,6 +11,7 @@ export default function AttendanceTable({ people = [] }) {
    setPeopleState(people);
   }, [people])
 
+
   const markAttendance = async (person) => {
     setLoading((prev) => ({ ...prev, [person.id]: true }));
 
@@ -112,7 +113,7 @@ export default function AttendanceTable({ people = [] }) {
                       {person.firstname} {person.lastname}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {person.code}
+                      {person.finalCode || person.code}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {person.department}
